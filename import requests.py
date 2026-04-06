@@ -1,0 +1,14 @@
+import requests
+
+# Replace with your actual token
+API_KEY = "eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzc1NDU5ODY2LCJqdGkiOiI0MWVmNDZlNi1hNGNlLTQwM2MtODI4Ni1iMWJkZTVmYzMzODQiLCJ1c2VyX3V1aWQiOiJjOThkZGQ4NC02NmQzLTQwOWYtYWU0My0xNDE4YmU1YjE1ZGIiLCJzY29wZSI6ImF2YWlsYWJpbGl0eTpyZWFkIGF2YWlsYWJpbGl0eTp3cml0ZSBldmVudF90eXBlczpyZWFkIGV2ZW50X3R5cGVzOndyaXRlIGxvY2F0aW9uczpyZWFkIHJvdXRpbmdfZm9ybXM6cmVhZCBzaGFyZXM6d3JpdGUgc2NoZWR1bGVkX2V2ZW50czpyZWFkIHNjaGVkdWxlZF9ldmVudHM6d3JpdGUgc2NoZWR1bGluZ19saW5rczp3cml0ZSBncm91cHM6cmVhZCBvcmdhbml6YXRpb25zOnJlYWQgb3JnYW5pemF0aW9uczp3cml0ZSB1c2VyczpyZWFkIGFjdGl2aXR5X2xvZzpyZWFkIGRhdGFfY29tcGxpYW5jZTp3cml0ZSBvdXRnb2luZ19jb21tdW5pY2F0aW9uczpyZWFkIHdlYmhvb2tzOnJlYWQgd2ViaG9va3M6d3JpdGUifQ.d1XoAQXzQVg27KIAJxODmnBiE7pANR7layXyyqU6nXNoB8D1wGShoz7-mKi-Smn96qwBuC6jj-7reIyqLqYdxg"
+
+url = "https://api.calendly.com/users/me"
+headers = {"Authorization": f"Bearer {API_KEY}"}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    print("Success! Connected to Calendly.")
+else:
+    print("Error:", response.status_code, response.text)
