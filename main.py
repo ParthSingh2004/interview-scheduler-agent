@@ -14,20 +14,25 @@ async def handle_incoming_email(email: IncomingEmail, background_tasks: Backgrou
 def process_email(email: IncomingEmail):
     print(f"Processing email from: {email.sender}")
     
-    # 1. Check Intent via Gemini
-    wants_interview = detect_intent(email.body)
+    # 1. Get the JSON dictionary from Gemini
+    ai_decision = detect_intent(email.body)
     
     # 2. Act based on Intent
-    if wants_interview:
+    if ai_decision.get("intent") == "SCHEDULE":
         print("Intent: Schedule. Generating unique link...")
         
-        # 3. Get unique link
         unique_link = generate_single_use_link()
         
         if unique_link:
+            # 3. Add the date to the link if Gemini found one
+            extracted_date = ai_decision.get("date")
+            if extracted_date:
+                unique_link = f"{unique_link}?date={extracted_date}"
+                print(f"Added specific date to link: {extracted_date}")
+            
             # 4. Send email
             send_scheduling_link(email.sender, unique_link)
         else:
-            print("Failed to generate link. Email not sent.")
+            print("Failed to generate link.")
     else:
         print("Intent: Other. Ignoring.")

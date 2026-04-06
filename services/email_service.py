@@ -29,7 +29,7 @@ def send_scheduling_link(recipient_email: str, dynamic_calendly_link: str):
     This link is for one-time use only.
 
     Best,
-    AI Agent
+    Parth Singh
     """
     msg.attach(MIMEText(body, 'plain'))
 
