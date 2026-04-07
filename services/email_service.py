@@ -60,7 +60,5 @@ Best regards,
 Parth Singh
 
 --
-🤖 This email was drafted by Parth's AI Scheduling Assistant. 
-If none of these times work, just reply directly and Parth will take over!
 """
     send_email(to_email, subject, body)
