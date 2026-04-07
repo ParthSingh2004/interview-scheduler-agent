@@ -1,6 +1,4 @@
-from pydantic import BaseModel
-
 class IncomingEmail(BaseModel):
     sender: str
-    subject: str
+    subject: Optional[str] = ""
     body: str
