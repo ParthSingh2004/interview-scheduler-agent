@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
+SMTP_PORT = 465 # Updated to match SSL
 SENDER_EMAIL = os.getenv("SMTP_EMAIL")
 APP_PASSWORD = os.getenv("SMTP_APP_PASSWORD")
 
-def send_email(to_email: str, subject: str, body: str):
+def send_email(to_email: str, subject: str, body: str) -> bool:
     """Core function to send an email."""
     msg = MIMEMultipart()
     msg['From'] = SENDER_EMAIL
@@ -20,16 +20,17 @@ def send_email(to_email: str, subject: str, body: str):
     msg.attach(MIMEText(body, 'plain'))
 
     try:
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
+        server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
         server.login(SENDER_EMAIL, APP_PASSWORD)
         server.send_message(msg)
         server.quit()
         print(f"Email sent successfully to {to_email}")
+        return True
     except Exception as e:
         print(f"SMTP Error: {e}")
+        return False
 
-def send_scheduling_link(recipient_email: str, dynamic_calendly_link: str):
+def send_scheduling_link(recipient_email: str, dynamic_calendly_link: str) -> bool:
     """Sends the initial scheduling link."""
     subject = "Let's schedule your interview!"
     body = f"""Hi there,
@@ -44,9 +45,9 @@ This link is for one-time use only.
 Best,
 Parth Singh
 """
-    send_email(recipient_email, subject, body)
+    return send_email(recipient_email, subject, body)
 
-def send_reschedule_link(to_email: str, unique_link: str):
+def send_reschedule_link(to_email: str, unique_link: str) -> bool:
     """Sends the reschedule link."""
     subject = "Rescheduling your Interview"
     body = f"""Hello,
@@ -58,7 +59,5 @@ Please select a new time using this link:
 
 Best regards,
 Parth Singh
-
---
 """
-    send_email(to_email, subject, body)
+    return send_email(to_email, subject, body)
