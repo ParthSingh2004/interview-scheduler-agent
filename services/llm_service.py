@@ -14,16 +14,23 @@ def detect_intent(email_body: str) -> dict:
     """Returns a dictionary with intent and optional date."""
     
     # We tell Gemini today's exact date so it can do the math
-    system_prompt = """
-    You are an AI assistant. Today's date is April 6, 2026.
-    Determine if the sender wants to schedule an interview. 
+    system_prompt =system_prompt = """
+    You are an AI assistant. Today's date is April 7, 2026.
+    Determine the sender's intent:
+    - "SCHEDULE": Asking to set up a new interview.
+    - "RESCHEDULE": Asking to change, move, postpone, or cancel an existing interview.
+    - "OTHER": Anything else.
+    
     If they mention a specific date, extract it in YYYY-MM-DD format.
     
     You MUST reply with ONLY a valid JSON object. Do not include markdown formatting.
     Example 1: {"intent": "SCHEDULE", "date": "2026-04-10"}
-    Example 2: {"intent": "SCHEDULE", "date": null}
+    Example 2: {"intent": "RESCHEDULE", "date": null}
     Example 3: {"intent": "OTHER", "date": null}
-    """
+    """ 
+
+   
+    
     
     try:
         response = model.generate_content(f"{system_prompt}\n\nEmail:\n{email_body}")
